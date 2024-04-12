@@ -1,6 +1,6 @@
 ﻿namespace ContactsApi.Models;
 
-public class ContactDTO
+public class Contact
 {
     public int Id { get; set; }
     public string? FirstName { get; set; }
