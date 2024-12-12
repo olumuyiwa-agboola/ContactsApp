@@ -9,6 +9,6 @@ namespace ContactsApi.Core.Abstractions
 
         Task<Contact?> GetContact(string contactId);
 
-        Task<Result<List<Contact>>> GetAllContacts();
+        Task<List<Contact>> GetAllContacts();
     }
 }

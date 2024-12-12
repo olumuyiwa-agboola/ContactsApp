@@ -29,10 +29,10 @@ namespace ContactsApi.Core.Services
         {
             List<Contact>? contacts = await _contactsRepository.GetAllContacts();
 
-            if (contacts is not null)
+            if (contacts is not null && contacts.Count != 0)
                 return contacts;
             else
-                return Result.NotFound("No contacts found");
+                return Result.NotFound("There are no contacts in the database");
         }
 
         public async Task<Result<Contact>> GetContactById(string contactId)
