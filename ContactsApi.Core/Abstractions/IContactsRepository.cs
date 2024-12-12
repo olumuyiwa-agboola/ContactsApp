@@ -1,11 +1,14 @@
-﻿using ContactsApi.Core.Models;
+﻿using Ardalis.Result;
+using ContactsApi.Core.Models;
 
 namespace ContactsApi.Core.Abstractions
 {
     public interface IContactsRepository
     {
-        public Task<Contact?> GetContact(string contactId);
+        Task<int> SaveContact(Contact contact);
 
-        public Task<int> SaveContact(Contact contact);
+        Task<Contact?> GetContact(string contactId);
+
+        Task<Result<List<Contact>>> GetAllContacts();
     }
 }

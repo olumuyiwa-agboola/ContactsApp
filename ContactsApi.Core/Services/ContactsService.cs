@@ -25,6 +25,16 @@ namespace ContactsApi.Core.Services
                 return Result.Error();
         }
 
+        public async Task<Result<List<Contact>>> GetAllContacts()
+        {
+            List<Contact>? contacts = await _contactsRepository.GetAllContacts();
+
+            if (contacts is not null)
+                return contacts;
+            else
+                return Result.NotFound("No contacts found");
+        }
+
         public async Task<Result<Contact>> GetContactById(string contactId)
         {
             Contact? contact = await _contactsRepository.GetContact(contactId);

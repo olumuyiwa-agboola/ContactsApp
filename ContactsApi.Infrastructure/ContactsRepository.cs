@@ -3,12 +3,24 @@ using Microsoft.Data.Sqlite;
 using ContactsApi.Core.Models;
 using ContactsApi.Core.Abstractions;
 using System.Data;
+using Ardalis.Result;
 
 namespace ContactsApi.Infrastructure
 {
     public class ContactsRepository : IContactsRepository
     {
         private readonly SqliteConnection _connection = new($"Data Source={AppContext.BaseDirectory}\\Contacts.db");
+
+        public async Task<Result<List<Contact>>> GetAllContacts()
+        {
+            string query = "SELECT * FROM Contacts";
+
+            using SqliteConnection connection = _connection;
+
+            List<Contact>? contacts = (await connection.QueryAsync<Contact>(query)).ToList();
+
+            return contacts;
+        }
 
         public async Task<Contact?> GetContact(string contactId)
         {
