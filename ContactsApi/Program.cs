@@ -7,7 +7,7 @@ using ContactsApi.Core.Abstractions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddFastEndpoints();
-builder.Services.AddOpenApi("scalar-open-api-doc", options =>
+builder.Services.AddOpenApi("openapi-doc", options =>
 {
     options.AddDocumentTransformer((document, context, cancellationToken) =>
     {
@@ -15,7 +15,7 @@ builder.Services.AddOpenApi("scalar-open-api-doc", options =>
         {
             Title = "Contacts API",
             Version = "v1",
-            Description = "A simple RESTful API that creates, reads, updates and deletes contacts, as an experiment on the implementation of web APIs using the following concepts and tools:\n- REPR Pattern\n- Fast Endpoints\n- Results Pattern\n- Scalar.AspNetCore\n- Microsoft.AspNetCore.OpenApi"
+            Description = "A simple RESTful API that creates, reads, updates and deletes contacts, demonstating the REPR pattern, the Result pattern, and Open API documentation, using:\n- Fast Endpoints,\n- Ardalis.Result,\n- Scalar.AspNetCore,\n- Ardalis.Result.AspNetCore, and\n- Microsoft.AspNetCore.OpenApi"
         };
         return Task.CompletedTask;
     });
@@ -31,7 +31,10 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi(); 
     app.MapScalarApiReference(options =>
     {
-        options.WithEndpointPrefix("/{documentName}");
+        options
+        .WithEndpointPrefix("/{documentName}")
+        .WithTitle("Contacts API - OpenAPI Documentation")
+        .WithFavicon("https://img.icons8.com/?size=100&id=FXYjTaZ8d2Br&format=png&color=000000");
     });
 }
 
