@@ -19,6 +19,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "scalar-open-api-doc",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
