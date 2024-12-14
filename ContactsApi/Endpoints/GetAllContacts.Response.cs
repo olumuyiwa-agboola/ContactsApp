@@ -1,4 +1,5 @@
-﻿using ContactsApi.Core.Models;
+﻿using System.ComponentModel;
+using ContactsApi.Core.Models;
 
 namespace ContactsApi.Endpoints
 {
@@ -6,6 +7,7 @@ namespace ContactsApi.Endpoints
     {
         public List<Contact> Contacts { get; set; } = contacts;
 
+        [property: Description("API response message")]
         public string Message { get; set; } = "Contacts retrived successfully!";
     }
 }

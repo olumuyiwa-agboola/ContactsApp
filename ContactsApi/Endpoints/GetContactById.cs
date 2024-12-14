@@ -8,7 +8,13 @@ namespace ContactsApi.Endpoints
     {
         public override void Configure()
         {
-            Get("/api/contacts/{ContactId}");
+            Get("/api/contacts/{contactId}");
+            Description(b => b
+            .WithSummary("Get contact by Id")
+            .WithDescription(@"This endpoint retrieves the details of a particular 
+                            contact from the database. It takes as the only input, the 
+                            unique identifier (contactId) of the contact as a route parameter.")
+            );
             AllowAnonymous();
         }
 

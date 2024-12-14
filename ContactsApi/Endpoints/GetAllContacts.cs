@@ -9,6 +9,11 @@ namespace ContactsApi.Endpoints
         public override void Configure()
         {
             Get("/api/contacts");
+            Description(b => b
+            .WithSummary("Get all contacts")
+            .WithDescription(@"This endpoint retrieves the details of all the contacts 
+                            from the database. It takes no input.")
+            );
             AllowAnonymous();
         }
 

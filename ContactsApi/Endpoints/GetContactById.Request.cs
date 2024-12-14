@@ -1,7 +1,12 @@
-﻿namespace ContactsApi.Endpoints
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace ContactsApi.Endpoints
 {
     public class GetContactByIdRequest
     {
+        [property: Required]
+        [property: Description("Unique identifier assigned to the contact when the record was created")]
         public required string ContactId { get; set; }
     }
 }

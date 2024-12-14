@@ -15,7 +15,7 @@ builder.Services.AddOpenApi("openapi-doc", options =>
         {
             Title = "Contacts API",
             Version = "v1",
-            Description = "A simple RESTful API that creates, reads, updates and deletes contacts, demonstating the REPR pattern, the Result pattern, and Open API documentation, using:\n- Fast Endpoints,\n- Ardalis.Result,\n- Scalar.AspNetCore,\n- Ardalis.Result.AspNetCore, and\n- Microsoft.AspNetCore.OpenApi"
+            Description = "A simple RESTful API that creates, reads, updates and deletes contacts, implemented in ASP.NET Core to practice the REPR pattern, the Result pattern, and Open API documentation with Scalar, using:\n- Ardalis.Result\n- Fast Endpoints\n- Scalar.AspNetCore\n- Ardalis.Result.AspNetCore\n- Microsoft.AspNetCore.OpenApi\n\nOther dependencies:\n- Dapper\n- Microsoft.Data.Sqlite\n\n.NET Version: 9.0"
         };
         return Task.CompletedTask;
     });
