@@ -20,6 +20,18 @@ namespace ContactsApi.Core.Services
                 return Result.Error();
         }
 
+        public async Task<Result<string>> DeleteContact(string contactId)
+        {
+            int? result = await _contactsRepository.DeleteContact(contactId);
+
+            if (result == 1)
+                return Result.Success();
+            else if (result == 0)
+                return Result.NotFound("Contact not found");
+            else
+                return Result.Error("An error occured");
+        }
+
         public async Task<Result<List<Contact>>> GetAllContacts()
         {
             List<Contact>? contacts = await _contactsRepository.GetAllContacts();

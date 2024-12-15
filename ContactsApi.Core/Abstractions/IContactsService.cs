@@ -7,6 +7,8 @@ namespace ContactsApi.Core.Abstractions
     {
         Task<Result<List<Contact>>> GetAllContacts();
 
+        Task<Result<string>> DeleteContact(string contactId);
+
         Task<Result<Contact>> GetContactById(string contactId);
 
         Task<Result<Contact>> AddContact(string firstName, string lastName, string emailAddress, string phoneNumber);

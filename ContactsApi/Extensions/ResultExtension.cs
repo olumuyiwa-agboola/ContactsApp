@@ -1,8 +1,6 @@
-﻿using Ardalis.Result;
+﻿using System.Net;
 using FastEndpoints;
-using System.Net;
-
-//using FastEndpoints.Swagger;
+using Ardalis.Result;
 using IResult = Ardalis.Result.IResult;
 
 namespace ContactsApi.Extensions
