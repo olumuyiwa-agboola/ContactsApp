@@ -2,8 +2,6 @@
 using Microsoft.Data.Sqlite;
 using ContactsApi.Core.Models;
 using ContactsApi.Core.Abstractions;
-using System.Data;
-using Ardalis.Result;
 
 namespace ContactsApi.Infrastructure
 {
@@ -11,7 +9,20 @@ namespace ContactsApi.Infrastructure
     {
         private readonly SqliteConnection _connection = new($"Data Source={AppContext.BaseDirectory}\\Contacts.db");
 
-        public async Task<Result<List<Contact>>> GetAllContacts()
+        public async Task<int> DeleteContact(string contactId)
+        {
+            DynamicParameters parameters = new();
+
+            parameters.Add("Id", contactId);
+
+            string query = "DELETE FROM Contacts WHERE Id = @Id";
+
+            using SqliteConnection connection = _connection;
+
+            return await connection.ExecuteAsync(query, parameters);
+        }
+
+        public async Task<List<Contact>> GetAllContacts()
         {
             string query = "SELECT * FROM Contacts";
 
@@ -47,6 +58,23 @@ namespace ContactsApi.Infrastructure
             parameters.Add("Id", contact.Id);
 
             string query = "INSERT INTO Contacts (Id, FirstName, LastName, Email, PhoneNumber) VALUES (@Id, @FirstName, @LastName, @Email, @PhoneNumber)";
+
+            using SqliteConnection connection = _connection;
+
+            return await connection.ExecuteAsync(query, parameters);
+        } 
+
+        public async Task<int> UpdateContact(Contact contact)
+        {
+            DynamicParameters parameters = new();
+
+            parameters.Add("PhoneNumber", contact.PhoneNumber);
+            parameters.Add("FirstName", contact.FirstName);
+            parameters.Add("LastName", contact.LastName);
+            parameters.Add("Email", contact.Email);
+            parameters.Add("Id", contact.Id);
+
+            string query = "UPDATE Contacts SET FirstName = @FirstName, LastName = @LastName, Email = @Email, PhoneNumber = @PhoneNumber WHERE Id = @Id";
 
             using SqliteConnection connection = _connection;
 

@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ContactsApi.Core.Models
+namespace ContactsApi.Endpoints
 {
-    public record Contact(
+    public record UpdateContactRequest(
         [property: Required]
         [property: Description("Unique identifier assigned to the contact when the record was created")]
-        string Id,
+        string ContactId,
 
         [property: Required]
         [property: Description("First name of the contact")]

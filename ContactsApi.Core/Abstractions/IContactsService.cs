@@ -10,5 +10,7 @@ namespace ContactsApi.Core.Abstractions
         Task<Result<Contact>> GetContactById(string contactId);
 
         Task<Result<Contact>> AddContact(string firstName, string lastName, string emailAddress, string phoneNumber);
+
+        Task<Result<Contact>> UpdateContact(string contactId, string firstName, string lastName, string emailAddress, string phoneNumber);
     }
 }

@@ -8,14 +8,9 @@ namespace ContactsApi.Core.Services
     {
         public async Task<Result<Contact>> AddContact(string firstName, string lastName, string emailAddress, string phoneNumber)
         {
-            Contact contact = new() 
-            {
-                LastName = lastName,
-                Email = emailAddress,
-                FirstName = firstName,
-                PhoneNumber = phoneNumber,
-                Id = new Random().Next(10000, 100000).ToString()
-            };
+            string id = new Random().Next(10000, 100000).ToString();
+
+            Contact contact = new(id, firstName, lastName, emailAddress, phoneNumber);
 
             int result = await _contactsRepository.SaveContact(contact);
 
@@ -41,6 +36,25 @@ namespace ContactsApi.Core.Services
 
             if (contact is not null)
                 return contact;
+            else
+                return Result.NotFound("Contact not found");
+        }
+
+        public async Task<Result<Contact>> UpdateContact(string contactId, string newFirstName, string newLastName, string newEmailAddress, string newPhoneNumber)
+        {
+            Contact? contact = await _contactsRepository.GetContact(contactId);
+
+            if (contact is not null)
+            {
+                Contact updatedContact = new(contactId, newFirstName, newLastName, newEmailAddress, newPhoneNumber);
+
+                var result = await _contactsRepository.UpdateContact(updatedContact);
+
+                if (result == 1)
+                    return updatedContact;
+                else
+                    return Result.Error();
+            }
             else
                 return Result.NotFound("Contact not found");
         }
