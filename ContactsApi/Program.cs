@@ -1,44 +1,36 @@
 using FastEndpoints;
-using Scalar.AspNetCore;
+using Microsoft.OpenApi.Models;
 using ContactsApi.Core.Services;
 using ContactsApi.Infrastructure;
 using ContactsApi.Core.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddFastEndpoints();
-builder.Services.AddOpenApi("openapi-doc", options =>
+builder.Services.AddSwaggerGen(c =>
 {
-    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    OpenApiInfo openApiInfo = new()
     {
-        document.Info = new()
-        {
-            Title = "Contacts API",
-            Version = "v1",
-            Description = "A simple RESTful API that creates, reads, updates and deletes contacts, implemented in ASP.NET Core to practice the REPR pattern, the Result pattern, and Open API documentation with Scalar, using:\n- Ardalis.Result\n- Fast Endpoints\n- Scalar.AspNetCore\n- Ardalis.Result.AspNetCore\n- Microsoft.AspNetCore.OpenApi\n\nOther dependencies:\n- Dapper\n- Microsoft.Data.Sqlite\n\n.NET Version: 9.0"
-        };
-        return Task.CompletedTask;
-    });
+        Version = "v1",
+        Title = "Contacts API",
+        Description = "A simple RESTful API that creates, reads, updates and deletes contacts, implemented in ASP.NET Core to practice the REPR pattern, the Result pattern, and Open API documentation with Swagger, using:\n - Ardalis.Result\n - Fast Endpoints\n - Scalar.AspNetCore\n - Ardalis.Result.AspNetCore\n - Microsoft.AspNetCore.OpenApi\n\nOther dependencies:\n - Dapper\n - Microsoft.Data.Sqlite\n\n.NET Version: 9.0"
+    };
+
+    c.SwaggerDoc("v1", openApiInfo);
 });
+builder.Services.AddFastEndpoints();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IContactsService, ContactsService>();
 builder.Services.AddScoped<IContactsService, ContactsService>();
 builder.Services.AddScoped<IContactsRepository, ContactsRepository>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.MapOpenApi(); 
-    app.MapScalarApiReference(options =>
-    {
-        options
-        .WithEndpointPrefix("/{documentName}")
-        .WithTitle("Contacts API - OpenAPI Documentation")
-        .WithFavicon("https://img.icons8.com/?size=100&id=FXYjTaZ8d2Br&format=png&color=000000");
-    });
-}
-
+    c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
+});
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseFastEndpoints();
-
 app.Run();
