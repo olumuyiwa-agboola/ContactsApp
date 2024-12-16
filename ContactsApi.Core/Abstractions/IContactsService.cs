@@ -1,5 +1,5 @@
-﻿using Ardalis.Result;
-using ContactsApi.Core.Models;
+﻿using ContactsApi.Core.Models;
+using ContactsApi.Core.Result;
 
 namespace ContactsApi.Core.Abstractions
 {

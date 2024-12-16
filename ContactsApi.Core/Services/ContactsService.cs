@@ -1,5 +1,5 @@
-﻿using Ardalis.Result;
-using ContactsApi.Core.Models;
+﻿using ContactsApi.Core.Models;
+using ContactsApi.Core.Result;
 using ContactsApi.Core.Abstractions;
 
 namespace ContactsApi.Core.Services
@@ -17,7 +17,7 @@ namespace ContactsApi.Core.Services
             if (result == 1)
                 return contact;
             else
-                return Result.Error();
+                return ErrorResult.UnprocessableEntity();
         }
 
         public async Task<Result<string>> DeleteContact(string contactId)
@@ -25,21 +25,21 @@ namespace ContactsApi.Core.Services
             int? result = await _contactsRepository.DeleteContact(contactId);
 
             if (result == 1)
-                return Result.Success();
+                return "Contact deleted successfully!";
             else if (result == 0)
-                return Result.NotFound("Contact not found");
+                return ErrorResult.NotFound("Contact not found");
             else
-                return Result.Error("An error occured");
+                return ErrorResult.UnprocessableEntity();
         }
 
         public async Task<Result<List<Contact>>> GetAllContacts()
         {
             List<Contact>? contacts = await _contactsRepository.GetAllContacts();
 
-            if (contacts is not null)
+            if (contacts is not null && contacts.Count != 0)
                 return contacts;
             else
-                return Result.NotFound("No contacts found");
+                return ErrorResult.NotFound("There are no contacts saved");
         }
 
         public async Task<Result<Contact>> GetContactById(string contactId)
@@ -49,7 +49,7 @@ namespace ContactsApi.Core.Services
             if (contact is not null)
                 return contact;
             else
-                return Result.NotFound("Contact not found");
+                return ErrorResult.NotFound("Contact not found");
         }
 
         public async Task<Result<Contact>> UpdateContact(string contactId, string newFirstName, string newLastName, string newEmailAddress, string newPhoneNumber)
@@ -65,10 +65,10 @@ namespace ContactsApi.Core.Services
                 if (result == 1)
                     return updatedContact;
                 else
-                    return Result.Error();
+                    return ErrorResult.UnprocessableEntity();
             }
             else
-                return Result.NotFound("Contact not found");
+                return ErrorResult.NotFound("Contact not found");
         }
     }
 }

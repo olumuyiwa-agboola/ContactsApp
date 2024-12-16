@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using FastEndpoints;
-using Ardalis.Result;
-using IResult = Ardalis.Result.IResult;
+using ContactsApi.Core.Result;
+using IResult = ContactsApi.Core.Result.IResult;
 
 namespace ContactsApi.Extensions
 {
@@ -16,15 +16,25 @@ namespace ContactsApi.Extensions
                     break;
 
                 case ResultStatus.NotFound:
-                    var problemDetails = new ProblemDetails()
-                    {
-                        Status = (int)HttpStatusCode.NotFound,
-                        Detail = result.Errors.FirstOrDefault(),
-                        TraceId = endpoint.HttpContext.TraceIdentifier,
-                        Instance = endpoint.HttpContext.Request.Path.Value!
-                    };
+                    await endpoint.HttpContext.Response.SendAsync(
+                        new ProblemDetails()
+                        {
+                            Detail = result.Error!.Detail,
+                            Status = (int)HttpStatusCode.NotFound,
+                            TraceId = endpoint.HttpContext.TraceIdentifier,
+                            Instance = endpoint.HttpContext.Request.Path.Value!
+                        }, (int)HttpStatusCode.NotFound);
+                    break;
 
-                    await endpoint.HttpContext.Response.SendAsync(problemDetails, (int)HttpStatusCode.NotFound);
+                case ResultStatus.UnprocessableEntity:
+                    await endpoint.HttpContext.Response.SendAsync(
+                        new ProblemDetails()
+                        {
+                            Detail = result.Error!.Detail,
+                            Status = (int)HttpStatusCode.UnprocessableEntity,
+                            TraceId = endpoint.HttpContext.TraceIdentifier,
+                            Instance = endpoint.HttpContext.Request.Path.Value!
+                        }, (int)HttpStatusCode.UnprocessableEntity);
                     break;
             }
         }

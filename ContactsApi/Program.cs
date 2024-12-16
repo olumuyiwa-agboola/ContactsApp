@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Version = "v1",
         Title = "Contacts API",
-        Description = "A simple RESTful API that creates, reads, updates and deletes contacts, implemented in ASP.NET Core to practice the REPR pattern, the Result pattern, and Open API documentation with Swagger, using:\n - Ardalis.Result\n - Fast Endpoints\n - Scalar.AspNetCore\n - Ardalis.Result.AspNetCore\n - Microsoft.AspNetCore.OpenApi\n\nOther dependencies:\n - Dapper\n - Microsoft.Data.Sqlite\n\n.NET Version: 9.0"
+        Description = "A simple RESTful API that creates, reads, updates and deletes contacts, implemented in ASP.NET Core to practice the REPR pattern, the Result pattern, and Open API documentation with Swagger, using:\n - Fast Endpoints\n - Swashbuckle.AspNetCore\n - Microsoft.AspNetCore.OpenApi\n\nOther dependencies:\n - Dapper\n - Microsoft.Data.Sqlite\n\n.NET Version: 9.0"
     };
 
     c.SwaggerDoc("v1", openApiInfo);
