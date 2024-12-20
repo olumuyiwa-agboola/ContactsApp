@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using FastEndpoints;
 using ContactsApi.Core.Result;
-using IResult = ContactsApi.Core.Result.IResult;
+using IResult = ContactsApi.Core.Abstractions.IResult;
 
 namespace ContactsApi.Extensions
 {

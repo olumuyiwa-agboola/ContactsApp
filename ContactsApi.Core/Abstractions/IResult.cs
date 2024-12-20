@@ -1,4 +1,6 @@
-﻿namespace ContactsApi.Core.Result
+﻿using ContactsApi.Core.Result;
+
+namespace ContactsApi.Core.Abstractions
 {
     public interface IResult
     {

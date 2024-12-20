@@ -1,10 +1,10 @@
-﻿namespace ContactsApi.Core.Result
+﻿using ContactsApi.Core.Abstractions;
+
+namespace ContactsApi.Core.Result
 {
     public class Result<T> : IResult
     {
         #region Constructors
-        protected Result() { }
-
         public Result(T value)
         {
             Error = null;
@@ -41,11 +41,11 @@
 
         public Type ValueType => typeof(T);
 
-        public object? GetValue() => Value;
-
         public ResultStatus Status { get; set; }
         #endregion
 
-        public static Error NotFound(string message) => new() { Type = ResultStatus.NotFound, Detail = message };
+        #region Public methods
+        public object? GetValue() => Value;
+        #endregion
     }
 }
